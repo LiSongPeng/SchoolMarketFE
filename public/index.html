@@ -9,6 +9,7 @@
     <link href="css/plugin/sweet-alert/sweet-alert.css">
     <script src="js/angular.min.js" type="text/javascript"></script>
     <script src="js/sweet-alert/sweet-alert.min.js"></script>
+    <script src="js/config.js" type="text/javascript"></script>
 </head>
 <body ng-app="index">
 <!-- Start Page Loading -->
@@ -65,7 +66,7 @@
         </li>
 
         <li class="link">
-            <a href="#" class="notifications">6</a>
+            <a class="notifications">6</a>
         </li>
 
         <li class="dropdown link">
@@ -74,8 +75,8 @@
                 Doe</b><span class="caret"></span></a>
             <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
                 <li role="presentation" class="dropdown-header">选项</li>
-                <li><a href="#"><i class="fa falist fa-wrench"></i>个人信息</a></li>
-                <li><a href="#"><i class="fa falist fa-anchor"></i>登录</a></li>
+                <li><a href="userInfo.html"><i class="fa falist fa-wrench"></i>个人信息</a></li>
+                <li><a href="login.html"><i class="fa falist fa-anchor"></i>登录</a></li>
                 <li><a href="#"><i class="fa falist fa-power-off"></i>退出</a></li>
             </ul>
         </li>
@@ -99,7 +100,8 @@
         <li><a href=""><span class="icon color6"><i class="fa fa-arrow-down"></i></span>向我下的订单</a></li>
         <li><a href=""><span class="icon color6"><i class="fa fa-search"></i></span>商品搜索</a></li>
         <li><a href=""><span class="icon color6"><i class="fa fa-shopping-cart"></i></span>我的购物车</a></li>
-        <li><a href="publishProduct.html"><span class="icon color6"><i class="fa fa-paper-plane"></i></span>发布商品</a></li>
+        <li><a href="publishProduct.html"><span class="icon color6"><i class="fa fa-paper-plane"></i></span>发布商品</a>
+        </li>
         <li><a href=""><span class="icon color6"><i class="fa fa-adjust"></i></span>已发布商品管理</a></li>
     </ul>
 
@@ -135,17 +137,26 @@
 
             <div class="sidepanel-m-title">
                 通知
-                <span class="left-icon"><a href="#"><i class="fa fa-refresh"></i></a></span>
-                <span class="right-icon"><a href="#"><i class="fa fa-eraser"></i></a></span>
+                <span class="left-icon"><a ng-click="refresh()"><i class="fa fa-refresh"></i></a></span>
+                <span class="right-icon"><a ng-click="removeAll()"><i class="fa fa-eraser"></i></a></span>
             </div>
 
             <div class="gn-title">列表</div>
 
             <ul class="list-w-title">
+
+                <li ng-repeat="item in notifications">
+                    <a href="#">
+                        <span class="label label-danger">详情</span>
+                        <span class="date" ng-click="removeItem()">删除</span>
+                        <h4>{{item.title}}</h4>
+                        {{item.content}}
+                    </a>
+                </li>
+
                 <li>
                     <a href="#">
                         <span class="label label-danger">ORDER</span>
-                        <span class="date">9 hours ago</span>
                         <h4>New Jacket 2.0</h4>
                         Etiam auctor porta augue sit amet facilisis. Sed libero nisi, scelerisque.
                     </a>
@@ -153,7 +164,6 @@
                 <li>
                     <a href="#">
                         <span class="label label-success">COMMENT</span>
-                        <span class="date">14 hours ago</span>
                         <h4>Bill Jackson</h4>
                         Etiam auctor porta augue sit amet facilisis. Sed libero nisi, scelerisque.
                     </a>
