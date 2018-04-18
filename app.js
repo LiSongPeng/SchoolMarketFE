@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use("/404", function (req, res) {
+app.use("/404notFound", function (req, res) {
     var options = {
         root: __dirname + '/public/',
         dotfiles: 'deny',
@@ -24,8 +24,9 @@ app.use("/404", function (req, res) {
         }
     };
     res.sendFile("404.html", options);
-})
+});
+//处理找不到的请求
 app.use(function (req, res, next) {
-    res.redirect("/404");
+    res.redirect("/404notFound");
 });
 module.exports = app;

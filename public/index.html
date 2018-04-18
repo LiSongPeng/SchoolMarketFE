@@ -6,18 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>校园市场首页</title>
     <link href="css/root.css" rel="stylesheet">
+    <link href="css/plugin/sweet-alert/sweet-alert.css">
+    <script src="js/angular.min.js" type="text/javascript"></script>
+    <script src="js/sweet-alert/sweet-alert.min.js"></script>
 </head>
-<body>
+<body ng-app="index">
 <!-- Start Page Loading -->
 <div class="loading"><img src="img/loading.gif" alt="loading-img"></div>
 <!-- End Page Loading -->
 <!-- //////////////////////////////////////////////////////////////////////////// -->
 <!-- START TOP -->
-<div id="top" class="clearfix">
+<div id="top" class="clearfix" ng-controller="topBarController">
 
     <!-- Start App Logo -->
     <div class="applogo">
-        <a href="userCenter.html" class="logo">校园市场</a>
+        <a href="index.html" class="logo">校园市场</a>
     </div>
     <!-- End App Logo -->
 
@@ -28,21 +31,19 @@
 
     <!-- Start Searchbox -->
     <form class="searchform">
-        <input type="text" class="searchbox" id="searchbox" placeholder="Search">
-        <span class="searchbutton"><i class="fa fa-search"></i></span>
+        <input type="text" class="searchbox" id="searchbox" placeholder="搜索商品" ng-model="searchKeyWord">
+        <span class="searchbutton" ng-click="searchProduct()"><i class="fa fa-search"></i></span>
     </form>
     <!-- End Searchbox -->
 
     <!-- Start Top Menu -->
     <ul class="topmenu">
-        <!--        <li><a href="#">Files</a></li>
-                <li><a href="#">Authors</a></li>-->
         <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">商品类型<span class="caret"></span></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">市场类型<span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a href="#">新品</a></li>
-                <li><a href="#">二手</a></li>
-                <li><a href="#">拍卖</a></li>
+                <li><a ng-click="changeContent('newProduct')">新品市场</a></li>
+                <li><a ng-click="changeContent('usedProduct')">二手市场</a></li>
+                <li><a ng-click="changeContent('auctionProduct')">拍卖市场</a></li>
             </ul>
         </li>
     </ul>
@@ -59,10 +60,7 @@
             <a href="#" data-toggle="dropdown" class="dropdown-toggle hdbutton">创建新的<span
                     class="caret"></span></a>
             <ul class="dropdown-menu dropdown-menu-list">
-                <li><a href="#"><i class="fa falist fa-paper-plane-o"></i>商品</a></li>
-                <!--                <li><a href="#"><i class="fa falist fa-font"></i>Blog Post</a></li>
-                                <li><a href="#"><i class="fa falist fa-file-image-o"></i>Image Gallery</a></li>
-                                <li><a href="#"><i class="fa falist fa-file-video-o"></i>Video Gallery</a></li>-->
+                <li><a href="publishProduct.html"><i class="fa falist fa-paper-plane-o"></i>商品</a></li>
             </ul>
         </li>
 
@@ -92,17 +90,17 @@
 
 <!-- //////////////////////////////////////////////////////////////////////////// -->
 <!-- START SIDEBAR -->
-<div class="sidebar clearfix">
+<div class="sidebar clearfix" ng-controller="sideBarController">
 
     <ul class="sidebar-panel nav">
         <li class="sidetitle">菜单栏</li>
-        <li><a href="userCenter.html"><span class="icon color5"><i class="fa fa-home"></i></span>主页</a></li>
+        <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>主页</a></li>
         <li><a href=""><span class="icon color6"><i class="fa fa-arrow-up"></i></span>我的订单</a></li>
         <li><a href=""><span class="icon color6"><i class="fa fa-arrow-down"></i></span>向我下的订单</a></li>
         <li><a href=""><span class="icon color6"><i class="fa fa-search"></i></span>商品搜索</a></li>
         <li><a href=""><span class="icon color6"><i class="fa fa-shopping-cart"></i></span>我的购物车</a></li>
-        <li><a href=""><span class="icon color6"><i class="fa fa-shopping-cart"></i></span>发布商品</a></li>
-        <li><a href=""><span class="icon color6"><i class="fa fa-shopping-cart"></i></span>已发布商品管理</a></li>
+        <li><a href="publishProduct.html"><span class="icon color6"><i class="fa fa-paper-plane"></i></span>发布商品</a></li>
+        <li><a href=""><span class="icon color6"><i class="fa fa-adjust"></i></span>已发布商品管理</a></li>
     </ul>
 
 </div>
@@ -131,15 +129,14 @@
     </ul>
 
     <!-- Tab panes -->
-    <div class="tab-content">
+    <div class="tab-content" ng-controller="notificationController">
 
-        <!-- Start Today -->
         <div role="tabpanel" class="tab-pane active" id="notification">
 
             <div class="sidepanel-m-title">
                 通知
                 <span class="left-icon"><a href="#"><i class="fa fa-refresh"></i></a></span>
-                <span class="right-icon"><a href="#"><i class="fa fa-file-o"></i></a></span>
+                <span class="right-icon"><a href="#"><i class="fa fa-eraser"></i></a></span>
             </div>
 
             <div class="gn-title">列表</div>
@@ -161,31 +158,15 @@
                         Etiam auctor porta augue sit amet facilisis. Sed libero nisi, scelerisque.
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <span class="label label-info">MEETING</span>
-                        <span class="date">at 2:30 PM</span>
-                        <h4>Developer Team</h4>
-                        Etiam auctor porta augue sit amet facilisis. Sed libero nisi, scelerisque.
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="label label-warning">EVENT</span>
-                        <span class="date">3 days left</span>
-                        <h4>Birthday Party</h4>
-                        Etiam auctor porta augue sit amet facilisis. Sed libero nisi, scelerisque.
-                    </a>
-                </li>
             </ul>
 
         </div>
-        <!-- End Today -->
     </div>
 
 </div>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script src="js/bootstrap/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/plugins.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
