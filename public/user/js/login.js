@@ -25,7 +25,7 @@ login.controller("loginController", ["$scope", "$http", function ($scope, $http)
                 }
                 location.href = "index.html";
             } else if (response.flag = FLAG_FAIL) {
-                swal("登录失败，输入信息有误！")
+                swal(response.message);
             }
 
         }, function errorCallback(response) {

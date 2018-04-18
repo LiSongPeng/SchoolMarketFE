@@ -1,59 +1,34 @@
-var register = angular.module("register", []);
-register.controller("registerController", ["$scope", "$http", function ($scope, $http) {
-    var schoolList = null;
-    $scope.gender = "1";
-    $http({
-        method: "GET",
-        url: BASE_URL + "/user/schoolList.do",
-    }).then(function successCallback(response) {
-        if (response.flag == FLAG_SUCCESS) {
-            console.log(schoolList);
-            schoolList = response.data;
-        } else {
-            swal("学校列表获取失败！")
+$(function () {
+    $("form").submit(function () {
+        var identify = $("input[name='identify']").val();
+        var password = $("input[name='password']").val();
+        var confirmPassword = $("input[name='confirmPassword']").val();
+        var email = $("input[name='email']").val();
+        var phone = $("input[name='phone']").val();
+        var identifyReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        var phoneReg = /^1[34578]\d{9}$/;
+        var emailReg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        var passwordReg = /^([A-Z]|[a-z]|[0-9]){8,20}$/;
+        if (!identifyReg.test(identify)) {
+            swal("身份证格式错误！");
+            return false;
         }
-    }, function errorCallback(response) {
-        swal("学校列表获取失败！")
+        if (!phoneReg.test(phone)) {
+            swal("手机号格式错误！");
+            return false;
+        }
+        if (!emailReg.test(email)) {
+            swal("邮箱格式错误！");
+            return false;
+        }
+        if (!passwordReg.test(password) || !passwordReg.test(confirmPassword)) {
+            swal("密码必须由大于8位小于20位的字母或数字组成！");
+            return false;
+        }
+        if (password != confirmPassword) {
+            swal("密码前后输入不一致！");
+            return false;
+        }
+        return true;
     });
-    if (schoolList != null) {
-        $('#search').typeahead({source: schoolList});
-    }
-    $scope.register = function () {
-        if (!$scope.realName || !$scope.gender || !$scope.identify || !$scope.studentId) {
-            swal("输入信息不能为空！");
-            return;
-        }
-        if (!$scope.school || !$scope.location || !$scope.email || !$scope.phone) {
-            swal("输入信息不能为空！");
-            return;
-        }
-        if (!$scope.password || !$scope.confirmPassword) {
-            swal("输入信息不能为空！");
-            return;
-        }
-        if ($scope.password.length < 8 || $scope.confirmPassword.length < 8) {
-            swal("密码不能小于八位！");
-        }
-        if ($scope.password != $scope.confirmPassword) {
-            swal("输入密码不一致！");
-            return;
-        }
-        $http({
-            method: "GET",
-            url: BASE_URL + "/user/register.do?realName=" + $scope.realName + "&gender=" + $scope.gender + "&identify="
-            + $scope.identify + "&studentId=" + $scope.stduentId + "&school=" + $scope.school
-            + "&location=" + $scope.location + "&email=" + $scope.email + "&phone=" + $scope.phone
-            + "&password=" + $scope.password,
-        }).then(function successCallback(response) {
-            console.log(response.data);
-            if (response.flag == FLAG_SUCCESS) {
-                swal("注册成功！")
-            } else if (response.flag = FLAG_FAIL) {
-                swal("注册失败，输入信息有误！")
-            }
-
-        }, function errorCallback(response) {
-            swal("注册失败，系统出现错误，请稍后重试！")
-        });
-    };
-}]);
+});
