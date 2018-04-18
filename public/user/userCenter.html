@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>校园市场首页</title>
-
-    <!-- ========== Css Files ========== -->
     <link href="css/root.css" rel="stylesheet">
 </head>
 <body>
@@ -107,16 +105,6 @@
         <li><a href=""><span class="icon color6"><i class="fa fa-shopping-cart"></i></span>已发布商品管理</a></li>
     </ul>
 
-    <div class="sidebar-plan">
-        Pro Plan<a href="#" class="link">Upgrade</a>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                 style="width: 60%;">
-            </div>
-        </div>
-        <span class="space">42 GB / 100 GB</span>
-    </div>
-
 </div>
 <!-- END SIDEBAR -->
 <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -196,177 +184,8 @@
     </div>
 
 </div>
-<!-- END SIDEPANEL -->
-<!-- //////////////////////////////////////////////////////////////////////////// -->
-
-
-<!-- ================================================
-jQuery Library
-================================================ -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
-
-<!-- ================================================
-Bootstrap Core JavaScript File
-================================================ -->
 <script src="js/bootstrap/bootstrap.min.js"></script>
-
-<!-- ================================================
-Plugin.js - Some Specific JS codes for Plugin Settings
-================================================ -->
 <script type="text/javascript" src="js/plugins.js"></script>
-
-<!-- ================================================
-Bootstrap Select
-================================================ -->
-<script type="text/javascript" src="js/bootstrap-select/bootstrap-select.js"></script>
-
-<!-- ================================================
-Bootstrap Toggle
-================================================ -->
-<script type="text/javascript" src="js/bootstrap-toggle/bootstrap-toggle.min.js"></script>
-
-<!-- ================================================
-Flot Chart
-================================================ -->
-<!-- main file -->
-<script type="text/javascript" src="js/flot-chart/flot-chart.js"></script>
-<!-- time.js -->
-<script type="text/javascript" src="js/flot-chart/flot-chart-time.js"></script>
-<!-- stack.js -->
-<script type="text/javascript" src="js/flot-chart/flot-chart-stack.js"></script>
-<!-- pie.js -->
-<script type="text/javascript" src="js/flot-chart/flot-chart-pie.js"></script>
-<!-- demo codes -->
-<script type="text/javascript" src="js/flot-chart/flot-chart-plugin.js"></script>
-
-
-<!-- ================================================
-Easy Pie Chart
-================================================ -->
-<!-- main file -->
-<script type="text/javascript" src="js/easypiechart/easypiechart.js"></script>
-<!-- demo codes -->
-<script type="text/javascript" src="js/easypiechart/easypiechart-plugin.js"></script>
-
-<!-- ================================================
-Sparkline
-================================================ -->
-<!-- main file -->
-<script type="text/javascript" src="js/sparkline/sparkline.js"></script>
-<!-- demo codes -->
-<script type="text/javascript" src="js/sparkline/sparkline-plugin.js"></script>
-
-<!-- ================================================
-Rickshaw
-================================================ -->
-<!-- d3 -->
-<script src="js/rickshaw/d3.v3.js"></script>
-<!-- main file -->
-<script src="js/rickshaw/rickshaw.js"></script>
-<!-- demo codes -->
-<script src="js/rickshaw/rickshaw-plugin.js"></script>
-
-<!-- ================================================
-Moment.js
-================================================ -->
-<script type="text/javascript" src="js/moment/moment.min.js"></script>
-
-<!-- ================================================
-Below codes are only for index widgets
-================================================ -->
-
-<!-- Today Sales -->
-<script>
-
-    // set up our data series with 50 random data points
-
-    var seriesData = [[], [], []];
-    var random = new Rickshaw.Fixtures.RandomData(20);
-
-    for (var i = 0; i < 110; i++) {
-        random.addData(seriesData);
-    }
-
-    // instantiate our graph!
-
-    var graph = new Rickshaw.Graph({
-        element: document.getElementById("todaysales"),
-        renderer: 'bar',
-        series: [
-            {
-                color: "#33577B",
-                data: seriesData[0],
-                name: 'Photodune'
-            }, {
-                color: "#77BBFF",
-                data: seriesData[1],
-                name: 'Themeforest'
-            }, {
-                color: "#C1E0FF",
-                data: seriesData[2],
-                name: 'Codecanyon'
-            }
-        ]
-    });
-
-    graph.render();
-
-    var hoverDetail = new Rickshaw.Graph.HoverDetail({
-        graph: graph,
-        formatter: function (series, x, y) {
-            var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
-            var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-            var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
-            return content;
-        }
-    });
-
-</script>
-
-<!-- Today Activity -->
-<script>
-    // set up our data series with 50 random data points
-
-    var seriesData = [[], [], []];
-    var random = new Rickshaw.Fixtures.RandomData(20);
-
-    for (var i = 0; i < 50; i++) {
-        random.addData(seriesData);
-    }
-
-    // instantiate our graph!
-
-    var graph = new Rickshaw.Graph({
-        element: document.getElementById("todayactivity"),
-        renderer: 'area',
-        series: [
-            {
-                color: "#9A80B9",
-                data: seriesData[0],
-                name: 'London'
-            }, {
-                color: "#CDC0DC",
-                data: seriesData[1],
-                name: 'Tokyo'
-            }
-        ]
-    });
-
-    graph.render();
-
-    var hoverDetail = new Rickshaw.Graph.HoverDetail({
-        graph: graph,
-        formatter: function (series, x, y) {
-            var date = '<span class="date">' + new Date(x * 1000).toUTCString() + '</span>';
-            var swatch = '<span class="detail_swatch" style="background-color: ' + series.color + '"></span>';
-            var content = swatch + series.name + ": " + parseInt(y) + '<br>' + date;
-            return content;
-        }
-    });
-    //自动播放
-    $("#myCarousel").carousel({
-        interval: 1000,
-    });
-</script>
 </body>
 </html>
