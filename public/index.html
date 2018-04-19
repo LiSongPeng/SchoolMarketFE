@@ -40,11 +40,12 @@
     <!-- Start Top Menu -->
     <ul class="topmenu">
         <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">市场类型<span class="caret"></span></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">商品类型<span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a ng-click="changeContent('newProduct')">新品市场</a></li>
-                <li><a ng-click="changeContent('usedProduct')">二手市场</a></li>
-                <li><a ng-click="changeContent('auctionProduct')">拍卖市场</a></li>
+                <li><a ng-click="getAllProduct()">全部</a></li>
+                <li ng-repeat="item in produtCategory">
+                    <a ng-click="changeCategory(item.id)">{{item.name}}</a>
+                </li>
             </ul>
         </li>
     </ul>
@@ -66,18 +67,17 @@
         </li>
 
         <li class="link">
-            <a class="notifications">6</a>
+            <a class="notifications">{{notifyNumber}}</a>
         </li>
 
         <li class="dropdown link">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="img/profileimg.png"
-                                                                                       alt="img"><b>Jonathan
-                Doe</b><span class="caret"></span></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="{{headImg}}"
+                                                                                       alt="头像"><b>{{currUser.name}}</b><span
+                    class="caret"></span></a>
             <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
                 <li role="presentation" class="dropdown-header">选项</li>
                 <li><a href="userInfo.html"><i class="fa falist fa-wrench"></i>个人信息</a></li>
-                <li><a href="login.html"><i class="fa falist fa-anchor"></i>登录</a></li>
-                <li><a href="#"><i class="fa falist fa-power-off"></i>退出</a></li>
+                <li><a ng-click="logOut()"><i class="fa falist fa-power-off"></i>退出</a></li>
             </ul>
         </li>
 
@@ -96,13 +96,13 @@
     <ul class="sidebar-panel nav">
         <li class="sidetitle">菜单栏</li>
         <li><a href="index.html"><span class="icon color5"><i class="fa fa-home"></i></span>主页</a></li>
-        <li><a href=""><span class="icon color6"><i class="fa fa-arrow-up"></i></span>我的订单</a></li>
-        <li><a href=""><span class="icon color6"><i class="fa fa-arrow-down"></i></span>向我下的订单</a></li>
-        <li><a href=""><span class="icon color6"><i class="fa fa-search"></i></span>商品搜索</a></li>
-        <li><a href=""><span class="icon color6"><i class="fa fa-shopping-cart"></i></span>我的购物车</a></li>
+        <li><a href="myOrder.html"><span class="icon color6"><i class="fa fa-arrow-up"></i></span>我的订单</a></li>
+        <li><a href="orderMe.html"><span class="icon color6"><i class="fa fa-arrow-down"></i></span>向我下的订单</a></li>
+        <li><a href="myShoppingCart.html"><span class="icon color6"><i class="fa fa-shopping-cart"></i></span>我的购物车</a>
+        </li>
         <li><a href="publishProduct.html"><span class="icon color6"><i class="fa fa-paper-plane"></i></span>发布商品</a>
         </li>
-        <li><a href=""><span class="icon color6"><i class="fa fa-adjust"></i></span>已发布商品管理</a></li>
+        <li><a href="productManage.html"><span class="icon color6"><i class="fa fa-adjust"></i></span>已发布商品管理</a></li>
     </ul>
 
 </div>
@@ -143,12 +143,12 @@
 
             <div class="gn-title">列表</div>
 
-            <ul class="list-w-title">
+            <ul class="list-w-title" ng-if="hasNotification">
 
                 <li ng-repeat="item in notifications">
                     <a href="#">
                         <span class="label label-danger">详情</span>
-                        <span class="date" ng-click="removeItem()">删除</span>
+                        <span class="date" ng-click="removeItem(item.id)">删除</span>
                         <h4>{{item.title}}</h4>
                         {{item.content}}
                     </a>
