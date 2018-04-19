@@ -1,10 +1,71 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>用户信息管理</title>
+
+    <link href="css/root.css" rel="stylesheet">
+    <link href="css/plugin/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
+    <style type="text/css">
+        body {
+            background: #F5F5F5;
+        }
+
+        .login-form {
+            width: 500px;
+            padding-top: 100px;
+            margin: 0px auto;
+            text-shadow: none;
+        }
+    </style>
+    <script src="js/jquery-3.0.0.min.js" type="text/javascript"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/sweet-alert/sweet-alert.min.js"></script>
+    <script src="js/config.js" type="text/javascript"></script>
+    <script src="js/userInfo.js" type="text/javascript"></script>
 </head>
 <body>
-
+<div class="login-form">
+    <form ng-app="userInfo">
+        <div class="top">
+            <h1>个人信息</h1>
+            <h4>用户信息管理</h4>
+        </div>
+        <div class="form-area" ng-controller="userInfoController">
+            收货地址
+            <div class="group">
+                <input type="text" name="location" class="form-control" ng-model="location">
+                <i class="fa fa-location-arrow"></i>
+            </div>
+            邮箱
+            <div class="group">
+                <input type="email" name="email" class="form-control" ng-model="email">
+                <i class="fa fa-envelope-o"></i>
+            </div>
+            手机
+            <div class="group">
+                <input type="text" name="phone" class="form-control" ng-model="phone">
+                <i class="fa fa-mobile"></i>
+            </div>
+            密码
+            <div class="group">
+                <input type="password" name="password" class="form-control" ng-model="password">
+                <i class="fa fa-key"></i>
+            </div>
+            确认密码
+            <div class="group">
+                <input type="password" name="confirmPassword" class="form-control" ng-model="confirmPassword">
+                <i class="fa fa-key"></i>
+            </div>
+            <button class="btn btn-danger btn-block" ng-click="reset()">重置</button>
+            <button class="btn btn-default btn-block" ng-click="confirmUpdate()">确认修改</button>
+        </div>
+    </form>
+    <div class="footer-links row">
+        <div class="col-xs-6"><a href="index.html"><i class="fa fa-sign-in"></i>首页</a></div>
+    </div>
+</div>
 </body>
 </html>

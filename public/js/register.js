@@ -21,7 +21,7 @@ $(function () {
             swal("邮箱格式错误！");
             return false;
         }
-        if (!passwordReg.test(password) || !passwordReg.test(confirmPassword)) {
+        if (!passwordReg.test(password)) {
             swal("密码必须由大于8位小于20位的字母或数字组成！");
             return false;
         }
