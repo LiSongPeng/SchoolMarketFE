@@ -2,9 +2,184 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>已发布商品管理</title>
+    <link href="css/root.css" rel="stylesheet">
+    <style>
+        .content {
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 80px;
+            margin-left: 0px;
+            background: #f5f5f5;
+        }
+
+        body {
+            background-color: white;
+        }
+
+        .container-padding {
+            height: 700px;
+        }
+    </style>
 </head>
 <body>
 
+<!-- START CONTENT -->
+<div class="content">
+    <!-- START CONTAINER -->
+    <div class="container-padding">
+
+
+        <!-- Start Row -->
+        <div class="row">
+
+            <!-- Start Panel -->
+            <div class="col-md-12">
+                <div class="panel panel-default" ng-app="product">
+                    <div class="panel-title">
+                        商品管理
+                    </div>
+                    <div class="panel-body table-responsive" ng-controller="productController">
+                        <p>按状态筛选
+                            <select ng-model="queryStatus" ng-change="queryByStatus()">
+                                <option value="4" selected>全部</option>
+                                <option value="0">禁止销售</option>
+                                <option value="1">销售中</option>
+                                <option value="2">审核中</option>
+                                <option value="3">已下架</option>
+                            </select>
+                        </p>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td>商品编号</td>
+                                <td>商品名称</td>
+                                <td>商品单价</td>
+                                <td>商品库存</td>
+                                <td>商品状态</td>
+                                <td>商品类别</td>
+                                <td>商品类型</td>
+                                <td>发布日期</td>
+                                <td>评论功能</td>
+                                <td>操作</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="product in products">
+                                <td>{{product.id}}</td>
+                                <td>
+                                    <a ng-click="productDetail(product.id)">{{product.name}}</a>
+                                </td>
+                                <td>{{product.price}}</td>
+                                <td>{{product.number}}</td>
+                                <td>
+                                    <span ng-if="product.status==0">禁止销售</span>
+                                    <span ng-if="product.status==1">销售中</span>
+                                    <span ng-if="product.status==2">审核中</span>
+                                    <span ng-if="product.status==3">已下架</span>
+                                </td>
+                                <td>
+                                    {{product.category.name}}
+                                </td>
+                                <td>
+                                    <span ng-if="product.type==1">常规商品</span>
+                                    <span ng-if="product.type==2">二手商品</span>
+                                    <span ng-if="product.type==3">拍卖商品</span>
+                                </td>
+                                <td>{{product.releaseTime}}</td>
+                                <td>
+                                    <button class="btn btn-danger" ng-if="product.comment==true"
+                                            ng-click="shutdownComment(product.id)">关闭
+                                    </button>
+                                    <button class="btn btn-danger" ng-if="product.comment==false"
+                                            ng-click="turnOnComment(product.id)">打开
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-default" data-toggle="modal" data-target="#myModal"
+                                            ng-click="updateProduct(product)"
+                                            ng-if="product.status!=0&&product.status!=3">修改
+                                    </button>
+                                    <button class="btn btn-default" ng-click="soldOutProduct(product.id)"
+                                            ng-if="product.status==1">下架
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr align="center">
+                                <td colspan="10">
+                                    <nav>
+                                        <ul class="pagination">
+                                            <li>
+                                                <a href="#" aria-label="Previous" ng-click="previous()">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <li class="active"><a>{{pageInfo.pageNum}}</a></li>
+                                            <li>
+                                                <a href="#" aria-label="Next" ng-click="next()">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">商品信息管理</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        价格
+                                        <div class="group">
+                                            <input type="number" class="form-control" ng-model="productPrice">
+                                        </div>
+                                        库存
+                                        <div class="group">
+                                            <input type="number" class="form-control" ng-model="productNumber">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-default" ng-click="confirmUpdate()">确认
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Panel -->
+
+        </div>
+        <!-- End Row -->
+
+
+    </div>
+    <!-- END CONTAINER -->
+    <!-- //////////////////////////////////////////////////////////////////////////// -->
+    <!-- Start Footer -->
+    <div class="row footer">
+        <div class="col-md-12 text-center">
+            Copyright © 2018 All rights reserved.
+        </div>
+    </div>
+    <!-- End Footer -->
+</div>
 </body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="js/sweet-alert/sweet-alert.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/productManage.js"></script>
 </html>
