@@ -2,9 +2,138 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>我的订单</title>
+    <link href="css/root.css" rel="stylesheet">
+    <style>
+        .content {
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-top: 80px;
+            margin-left: 0px;
+            background: #f5f5f5;
+        }
+
+        body {
+            background-color: white;
+        }
+
+        .container-padding {
+            height: 700px;
+        }
+    </style>
 </head>
 <body>
+<!-- START CONTENT -->
+<div class="content">
+    <!-- START CONTAINER -->
+    <div class="container-padding">
 
+
+        <!-- Start Row -->
+        <div class="row">
+
+            <!-- Start Panel -->
+            <div class="col-md-12">
+                <div class="panel panel-default" ng-app="order">
+                    <div class="panel-title">
+                        订单管理
+                    </div>
+                    <div class="panel-body table-responsive" ng-controller="orderController">
+                        <p>按状态筛选
+                            <select ng-model="queryStatus" ng-change="queryByStatus()">
+                                <option value="0">全部</option>
+                                <option value="1">未派送</option>
+                                <option value="2">派送中</option>
+                                <option value="3">已完成</option>
+                            </select>
+                        </p>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <td>订单编号</td>
+                                <td>商品名称</td>
+                                <td>商品单价</td>
+                                <td>订单数量</td>
+                                <td>订单总额</td>
+                                <td>订单状态</td>
+                                <td>订购日期</td>
+                                <td>完成日期</td>
+                                <td>操作</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="order in orders">
+                                <td>{{order.id}}</td>
+                                <td>
+                                    <a ng-click="productDetail(order.product.id)">{{order.product.name}}</a>
+                                </td>
+                                <td>{{order.price}}</td>
+                                <td>{{order.number}}</td>
+                                <td>{{order.totalPrice}}</td>
+                                <td>
+                                    <span ng-if="order.status==1">未派送</span>
+                                    <span ng-if="order.status==2">派送中</span>
+                                    <span ng-if="order.status==3">已完成</span>
+                                </td>
+                                <td>{{order.orderTime}}</td>
+                                <td>{{order.finishTime}}</td>
+                                <td>
+                                    <button class="btn btn-default" ng-if="order.status==2"
+                                            ng-click="confirmReceive(order.id)">确认收货
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr align="center">
+                                <td colspan="8">
+                                    <nav>
+                                        <ul class="pagination">
+                                            <li>
+                                                <a href="#" aria-label="Previous" ng-click="previous()">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <li class="active"><a>{{pageInfo.pageNum}}</a></li>
+                                            <li>
+                                                <a href="#" aria-label="Next" ng-click="next()">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Panel -->
+
+        </div>
+        <!-- End Row -->
+
+
+    </div>
+    <!-- END CONTAINER -->
+    <!-- //////////////////////////////////////////////////////////////////////////// -->
+    <!-- Start Footer -->
+    <div class="row footer">
+        <div class="col-md-12 text-center">
+            Copyright © 2018 All rights reserved.
+        </div>
+    </div>
+    <!-- End Footer -->
+</div>
 </body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="js/bootstrap-select/bootstrap-select.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/sweet-alert/sweet-alert.min.js"></script>
+<script type="text/javascript" src="js/plugins.js"></script>
+<script src="js/config.js"></script>
+<script src="js/myOrder.js"></script>
 </html>
