@@ -8,6 +8,45 @@ if (!currUser) {
     window.location.href = "login.html";
 }
 var product = angular.module("product", []);
+product.controller("topBarController", ["$rootScope", "$scope", "$http", function ($rootScope, $scope, $http) {
+    // $rootScope.currUser = JSON.parse(currUser);
+    $rootScope.currUser = currUser;
+    $rootScope.headImg = BASE_URL + $rootScope.currUser.headImg;
+    $scope.searchProduct = function () {
+        if (!$scope.searchKeyWord) {
+            swal("搜索内容不能为空！");
+            return;
+        }
+        window.sessionStorage.setItem(KEY_WORD, $scope.searchKeyWord);
+        window.location.href = "search.html";
+    };
+    jQuery('#searchbox').typeahead({
+        source: function (keyWord, process) {
+            $.ajax({
+                type: "GET",
+                url: BASE_URL + "/product/getNamesByKeyWord.do",
+                data: {"keyWord": keyWord},
+                dataType: "json",
+                success: function (response) {
+                    process(response.data);
+                }
+            });
+        },
+        updater: function (item) {
+            return item.replace(/<a(.+?)<\/a>/, ""); //这里一定要return，否则选中不显示
+        },
+        items: 6, //显示6条
+        delay: 500 //延迟时间
+    });
+    $scope.logOut = function () {
+        $rootScope.currUser = null;
+        window.sessionStorage.setItem(CURRENT_USER, null);
+        window.location.href = "login.html";
+    }
+}]);
+product.controller("sideBarController", ["$scope", "$http", function ($scope, $http) {
+}]);
+
 product.controller("productController", ["$scope", "$http", function ($scope, $http) {
     $scope.updateProduct = function (product) {
         $scope.productPrice = product.price;
@@ -133,3 +172,4 @@ product.controller("productController", ["$scope", "$http", function ($scope, $h
         window.location.href = "productDetail.html";
     };
 }]);
+
