@@ -16,7 +16,7 @@
     <script type="text/javascript" src="js/plugins.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </head>
-<body ng-app="index">
+<body ng-app="index" style="overflow-y: hidden;">
 <!-- Start Page Loading -->
 <div class="loading"><img src="img/loading.gif" alt="loading-img"></div>
 <!-- End Page Loading -->
@@ -31,8 +31,8 @@
     <!-- End App Logo -->
 
     <!-- Start Sidebar Show Hide Button -->
-    <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
-    <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
+    <a class="sidebar-open-button"><i class="fa fa-bars"></i></a>
+    <a class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
     <!-- End Sidebar Show Hide Button -->
 
     <!-- Start Searchbox -->
@@ -41,20 +41,6 @@
         <span class="searchbutton" ng-click="searchProduct()"><i class="fa fa-search"></i></span>
     </form>
     <!-- End Searchbox -->
-
-    <!-- Start Top Menu -->
-    <ul class="topmenu">
-        <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">商品类型<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a ng-click="getAllProduct()">全部</a></li>
-                <li ng-repeat="item in produtCategory">
-                    <a ng-click="changeCategory(item.id)">{{item.name}}</a>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    <!-- End Top Menu -->
 
     <!-- Start Sidepanel Show-Hide Button -->
     <a href="#sidepanel" class="sidepanel-open-button"><i class="fa fa-outdent"></i></a>
@@ -96,7 +82,7 @@
 
 <!-- //////////////////////////////////////////////////////////////////////////// -->
 <!-- START SIDEBAR -->
-<div class="sidebar clearfix" ng-controller="sideBarController">
+<div class="sidebar clearfix hidden" ng-controller="sideBarController">
 
     <ul class="sidebar-panel nav">
         <li class="sidetitle">菜单栏</li>
@@ -112,20 +98,7 @@
 
 </div>
 <!-- END SIDEBAR -->
-<!-- //////////////////////////////////////////////////////////////////////////// -->
-
-<!-- //////////////////////////////////////////////////////////////////////////// -->
-<!-- START CONTENT -->
-<div class="content">
-    <!-- Start Row -->
-    <div class="row">
-    </div>
-    <!-- End Row -->
-</div>
-<!-- End Content -->
-<!-- //////////////////////////////////////////////////////////////////////////// -->
-
-<!-- //////////////////////////////////////////////////////////////////////////// -->
+<iframe src="indexFrame.html" width="100%;" height="700px"></iframe>
 <!-- START SIDEPANEL -->
 <div role="tabpanel" class="sidepanel">
 

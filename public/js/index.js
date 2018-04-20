@@ -50,12 +50,6 @@ index.controller("topBarController", ["$rootScope", "$scope", "$http", function 
     }, function errorCallback(response) {
         swal("商品类别获取失败!");
     });
-    $scope.changeCategory = function (id) {
-        console.log("changeCategory to" + id);
-    };
-    $scope.getAllProduct = function () {
-        console.log("get all ");
-    };
     $scope.logOut = function () {
         $rootScope.currUser = null;
         window.sessionStorage.setItem(CURRENT_USER, null);
