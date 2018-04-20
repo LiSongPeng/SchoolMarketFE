@@ -2,7 +2,7 @@
 var currUser = {
     headImg: "/upload/head.png",
     name: "hello",
-    id: "22222222222",
+    id: "234234324234",
 };
 if (!currUser) {
     window.location.href = "login.html";
@@ -15,12 +15,30 @@ index.controller("topBarController", ["$rootScope", "$scope", "$http", function 
     $rootScope.headImg = BASE_URL + $rootScope.currUser.headImg;
     $scope.searchProduct = function () {
         if (!$scope.searchKeyWord) {
-            swal("搜索内容不能为空！")
+            swal("搜索内容不能为空！");
             return;
         }
         window.sessionStorage.setItem(KEY_WORD, $scope.searchKeyWord);
         window.location.href = "search.html";
     };
+    jQuery('#searchbox').typeahead({
+        source: function (keyWord, process) {
+            $.ajax({
+                type: "GET",
+                url: BASE_URL + "/product/getNamesByKeyWord.do",
+                data: {"keyWord": keyWord},
+                dataType: "json",
+                success: function (response) {
+                    process(response.data);
+                }
+            });
+        },
+        updater: function (item) {
+            return item.replace(/<a(.+?)<\/a>/, ""); //这里一定要return，否则选中不显示
+        },
+        items: 6, //显示6条
+        delay: 500 //延迟时间
+    });
     $http({
         method: "GET",
         url: BASE_URL + "/product/getProductCategory.do",
