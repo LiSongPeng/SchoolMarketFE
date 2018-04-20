@@ -7,8 +7,48 @@ var currUser = {
 if (!currUser) {
     window.location.href = "login.html";
 }
-var index = angular.module("order", []);
-index.controller("orderController", ["$scope", "$http", function ($scope, $http) {
+var order = angular.module("order", []);
+order.controller("topBarController", ["$rootScope", "$scope", "$http", function ($rootScope, $scope, $http) {
+    $rootScope.notifyNumber = 0;
+    // $rootScope.currUser = JSON.parse(currUser);
+    $rootScope.currUser = currUser;
+    $rootScope.headImg = BASE_URL + $rootScope.currUser.headImg;
+    $scope.searchProduct = function () {
+        if (!$scope.searchKeyWord) {
+            swal("搜索内容不能为空！");
+            return;
+        }
+        window.sessionStorage.setItem(KEY_WORD, $scope.searchKeyWord);
+        window.location.href = "search.html";
+    };
+    jQuery('#searchbox').typeahead({
+        source: function (keyWord, process) {
+            $.ajax({
+                type: "GET",
+                url: BASE_URL + "/product/getNamesByKeyWord.do",
+                data: {"keyWord": keyWord},
+                dataType: "json",
+                success: function (response) {
+                    process(response.data);
+                }
+            });
+        },
+        updater: function (item) {
+            return item.replace(/<a(.+?)<\/a>/, ""); //这里一定要return，否则选中不显示
+        },
+        items: 6, //显示6条
+        delay: 500 //延迟时间
+    });
+    $scope.logOut = function () {
+        $rootScope.currUser = null;
+        window.sessionStorage.setItem(CURRENT_USER, null);
+        window.location.href = "login.html";
+    }
+}]);
+order.controller("sideBarController", ["$scope", "$http", function ($scope, $http) {
+}]);
+
+order.controller("orderController", ["$scope", "$http", function ($scope, $http) {
     $scope.confirmSend = function (id) {
         $http({
             method: "GET",
@@ -78,3 +118,4 @@ index.controller("orderController", ["$scope", "$http", function ($scope, $http)
         window.location.href = "productDetail.html";
     };
 }]);
+
