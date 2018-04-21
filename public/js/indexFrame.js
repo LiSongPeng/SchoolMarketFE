@@ -1,0 +1,126 @@
+// var currUser = window.sessionStorage.getItem(CURRENT_USER);
+var currUser = {
+    headImg: "/upload/head.png",
+    name: "hello",
+    id: "22222222222",
+};
+if (!currUser) {
+    window.location.href = "login.html";
+}
+
+var indexFrame = angular.module("indexFrame", []);
+toastr.options = {
+    closeButton: false,
+    debug: false,
+    positionClass: "toast-top-center",
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "2000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut"
+};
+$('#visual').pignoseLayerSlider({
+    play: '.btn-play',
+    pause: '.btn-pause',
+    next: '.btn-next',
+    prev: '.btn-prev'
+});
+indexFrame.controller("bannerController", ["$scope", "$http", function ($scope, $http) {
+    $http({
+        method: "GET",
+        url: BASE_URL + "/product/getAllProduct.do?pageSize=5&pageNumber=1",
+    }).then(function successCallback(response) {
+        response = response.data;
+        if (response.flag == FLAG_SUCCESS) {
+            for (var i = 0; i < response.data.list.length; i++) {
+                response.data.list[i].imga = BASE_URL + response.data.list[i].imga;
+            }
+            $scope.recommends = response.data.list;
+            console.log($scope.recommends);
+        }
+    }, function errorCallback(response) {
+        toastr.error("商品获取失败!");
+    });
+}]);
+
+indexFrame.controller("productController", ["$scope", "$http", function ($scope, $http) {
+    $http({
+        method: "GET",
+        url: BASE_URL + "/product/getProductCategory.do",
+    }).then(function successCallback(response) {
+        response = response.data;
+        if (response.flag == FLAG_SUCCESS) {
+            $scope.categorys = response.data;
+        }
+    }, function errorCallback(response) {
+        toastr.error("商品类别获取失败!");
+    });
+    $scope.addToCart = function (product) {
+        $http({
+            method: "GET",
+            url: BASE_URL + "/shoppingCart/addShoppingCart.do?userId=" + currUser.id
+            + "&productId=" + product.id + "&number=1",
+        }).then(function successCallback(response) {
+            response = response.data;
+            if (response.flag == FLAG_SUCCESS) {
+                toastr.success("加入购物车成功!");
+            }
+        }, function errorCallback(response) {
+            toastr.error("加入购物车失败!");
+        });
+    };
+    var queryProduct = function (pageSize, pageNumber, category) {
+        var url = BASE_URL + "/product/getAllProduct.do";
+        if (category && category != 0) {
+            url = BASE_URL + "/product/getByCategory.do";
+        }
+        $http({
+            method: "GET",
+            url: url + "?pageSize=" + pageSize + "&pageNumber=" + pageNumber + "&category=" + category,
+        }).then(function successCallback(response) {
+            response = response.data;
+            if (response.flag == FLAG_SUCCESS) {
+                $scope.pageInfo = response.data;
+                $scope.products = response.data.list;
+                for (var i = 0; i < $scope.products.length; i++) {
+                    $scope.products[i].imga = BASE_URL + $scope.products[i].imga;
+                }
+            }
+        }, function errorCallback(response) {
+            toastr.error("商品获取失败!");
+        });
+    };
+    $scope.next = function () {
+        if ($scope.pageInfo.hasNextPage) {
+            if ($scope.productCategory != 0) {
+                queryProduct(8, $scope.pageInfo.pageNum + 1, $scope.productCategory);
+            } else {
+                queryProduct(8, $scope.pageInfo.pageNum + 1);
+            }
+        } else {
+            toastr.error("已经是最后一页!");
+        }
+    };
+    $scope.previous = function () {
+        if ($scope.pageInfo.hasPreviousPage) {
+            if ($scope.productCategory != 0) {
+                queryProduct(8, $scope.pageInfo.pageNum - 1, $scope.productCategory);
+            } else {
+                queryProduct(8, $scope.pageInfo.pageNum - 1);
+            }
+        } else {
+            toastr.error("已经是第一页!");
+        }
+    };
+    $scope.queryByCategory = function () {
+        queryProduct(8, 1, $scope.productCategory);
+    };
+    queryProduct(8, 1);
+    $scope.productDetail = function (productId) {
+        window.sessionStorage.setItem(PRODUCT_DETAIL, productId);
+        window.parent.location.href = "productDetail.html";
+    };
+}]);
