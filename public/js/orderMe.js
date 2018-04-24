@@ -80,7 +80,11 @@ order.controller("orderController", ["$scope", "$http", function ($scope, $http)
                     var date = new Date($scope.orders[i].orderTime);
                     $scope.orders[i].orderTime = date.toLocaleDateString() + date.toLocaleTimeString();
                     date = new Date($scope.orders[i].finishTime);
-                    $scope.orders[i].finishTime = date.toLocaleDateString() + date.toLocaleTimeString();
+                    if ($scope.orders[i].finishTime != null) {
+                        $scope.orders[i].finishTime = date.toLocaleDateString() + date.toLocaleTimeString();
+                    } else {
+                        $scope.orders[i].finishTime = "未完成";
+                    }
                 }
             }
         }, function errorCallback(response) {

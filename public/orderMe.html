@@ -16,7 +16,7 @@
     <script type="text/javascript" src="js/plugins.js"></script>
     <script type="text/javascript" src="js/orderMe.js"></script>
     <style>
-        .container-padding{
+        .container-padding {
             height: 600px;
         }
     </style>
@@ -36,8 +36,8 @@
     <!-- End App Logo -->
 
     <!-- Start Sidebar Show Hide Button -->
-    <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
-    <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
+    <a class="sidebar-open-button"><i class="fa fa-bars"></i></a>
+    <a class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
     <!-- End Sidebar Show Hide Button -->
 
     <!-- Start Searchbox -->
@@ -50,7 +50,7 @@
     <ul class="top-right">
 
         <li class="dropdown link">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="{{headImg}}"
+            <a data-toggle="dropdown" class="dropdown-toggle profilebox"><img src="{{headImg}}"
                                                                                        alt="头像"><b>{{currUser.name}}</b><span
                     class="caret"></span></a>
             <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
@@ -99,7 +99,7 @@
 
             <!-- Start Panel -->
             <div class="col-md-12">
-                <div class="panel panel-default" ng-app="order">
+                <div class="panel panel-default">
                     <div class="panel-title">
                         订单管理
                     </div>
@@ -121,6 +121,10 @@
                                 <td>订单数量</td>
                                 <td>订单总额</td>
                                 <td>订单状态</td>
+                                <td>购买人</td>
+                                <td>购买人电话</td>
+                                <td>购买人邮箱</td>
+                                <td>配送地址</td>
                                 <td>订购日期</td>
                                 <td>完成日期</td>
                                 <td>操作</td>
@@ -140,6 +144,10 @@
                                     <span ng-if="order.status==2">派送中</span>
                                     <span ng-if="order.status==3">已完成</span>
                                 </td>
+                                <td>{{order.user.name}}</td>
+                                <td>{{order.user.phone}}</td>
+                                <td>{{order.user.email}}</td>
+                                <td>{{order.user.location}}</td>
                                 <td>{{order.orderTime}}</td>
                                 <td>{{order.finishTime}}</td>
                                 <td>
@@ -151,7 +159,7 @@
                             </tbody>
                             <tfoot>
                             <tr align="center">
-                                <td colspan="9">
+                                <td colspan="12">
                                     <nav>
                                         <ul class="pagination">
                                             <li>
