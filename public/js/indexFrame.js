@@ -22,12 +22,6 @@ toastr.options = {
     showMethod: "fadeIn",
     hideMethod: "fadeOut"
 };
-$('#visual').pignoseLayerSlider({
-    play: '.btn-play',
-    pause: '.btn-pause',
-    next: '.btn-next',
-    prev: '.btn-prev'
-});
 indexFrame.controller("bannerController", ["$scope", "$http", function ($scope, $http) {
     $http({
         method: "GET",
