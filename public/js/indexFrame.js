@@ -12,7 +12,7 @@ var indexFrame = angular.module("indexFrame", []);
 toastr.options = {
     closeButton: false,
     debug: false,
-    positionClass: "toast-top-center",
+    positionClass: "toast-bottom-right",
     showDuration: "300",
     hideDuration: "1000",
     timeOut: "2000",
