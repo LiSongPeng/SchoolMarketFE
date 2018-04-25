@@ -9,6 +9,7 @@ forgotPassword.controller("forgotPasswordController", ["$scope", "$http", functi
             method: "GET",
             url: BASE_URL + "/user/forgot.do?phoneOrEmail=" + $scope.phoneOrEmail + "&identify=" + $scope.identify,
         }).then(function successCallback(response) {
+            response = response.data;
             if (response.flag == FLAG_SUCCESS) {
                 swal("您的密码是：" + response.data);
             } else if (response.flag = FLAG_FAIL) {

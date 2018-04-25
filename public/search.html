@@ -12,8 +12,8 @@
     <link href="css/index-style.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="js/toastr/toastr.min.css" rel="stylesheet" type="text/css">
     <style>
-        a{
-            cursor:pointer;
+        a {
+            cursor: pointer;
         }
     </style>
     <!-- js -->
@@ -51,7 +51,7 @@
                     <div class="section_room">
                         <select class="frm-field required" ng-model="productCategory">
                             <option value="0" selected>全部</option>
-                            <option ng-repeat="category in categorys" value="category.id">
+                            <option ng-repeat="category in categorys" value="{{category.id}}">
                                 {{category.name}}
                             </option>
                         </select>
@@ -83,12 +83,14 @@
                             <span class="product-new-top" ng-if="product.type==3">拍卖</span>
                         </div>
                         <div class="item-info-product ">
-                            <h4><a>{{product.name}}</a></h4>
+                            <h4><a style="cursor: auto;">{{product.name}}</a></h4>
                             <div class="info-product-price">
                                 <span class="item_price">￥{{product.price}}</span>
                             </div>
                             <a class="item_add single-item hvr-outline-out button2" ng-if="product.type!=3"
                                ng-click="addToCart(product)">加入购物车</a>
+                            <a ng-click="productDetail(product.id)" class="item_add single-item hvr-outline-out button2"
+                               ng-if="product.type==3">拍卖品</a>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,6 @@
-$(function () {
+var register = angular.module("register", []);
+register.controller("registerController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
+    $scope.action = $sce.trustAsResourceUrl(BASE_URL + "/user/register.do");
     $("form").submit(function () {
         var identify = $("input[name='identify']").val();
         var password = $("input[name='password']").val();
@@ -31,4 +33,4 @@ $(function () {
         }
         return true;
     });
-});
+}]);
