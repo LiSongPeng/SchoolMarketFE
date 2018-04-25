@@ -167,6 +167,7 @@ shoppingCart.controller("shoppingCartController", ["$scope", "$http", function (
                     method: "GET",
                     url: BASE_URL + "/shoppingCart/removeShoppingCart.do?id=" + $scope.balanceItem.id,
                 }).then(function successCallback(response) {
+                    $scope.pageInfo.pageNum = 0;
                 }, function errorCallback(response) {
                 });
                 var removeIndex = -1;
