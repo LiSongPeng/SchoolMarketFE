@@ -30,7 +30,7 @@
 </head>
 <body ng-app="publishProduct">
 <div class="login-form" ng-controller="publishProductController">
-    <form action="http://localhost:8080/SchoolMarket/product/addProduct.do" enctype="multipart/form-data" method="post"
+    <form action="{{action}}" enctype="multipart/form-data" method="post"
           id="form">
         <div class="top">
             <h1>商品发布</h1>

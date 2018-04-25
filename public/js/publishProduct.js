@@ -11,8 +11,9 @@ if (!currUser) {
     window.location.href = "login.html";
 }
 var publishProduct = angular.module("publishProduct", []);
-publishProduct.controller("publishProductController", ["$scope", "$http", function ($scope, $http) {
+publishProduct.controller("publishProductController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
     $('.textarea').wysihtml5();
+    $scope.action = $sce.trustAsResourceUrl(BASE_URL + "/product/addProduct.do");
     $http({
         method: "GET",
         url: BASE_URL + "/product/getProductCategory.do",
