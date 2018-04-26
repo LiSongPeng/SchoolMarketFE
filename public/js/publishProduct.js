@@ -1,12 +1,4 @@
-// var currUser = window.sessionStorage.getItem(CURRENT_USER);
-var currUser = {
-    name: "hello",
-    id: "234234324234",
-    location: "heeee",
-    email: "143432@qq.com",
-    phone: "15510841744",
-    password: "12345566666",
-};
+var currUser = JSON.parse(window.sessionStorage.getItem(CURRENT_USER));
 if (!currUser) {
     window.location.href = "login.html";
 }

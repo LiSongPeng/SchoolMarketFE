@@ -79,10 +79,10 @@
                             性别:{{user.gender==1?"男":"女"}}
                         </div>
                         <div class="text-center">
-                            邮箱{{user.email}}
+                            邮箱:{{user.email}}
                         </div>
                         <div class="text-center">
-                            手机{{user.phone}}
+                            手机:{{user.phone}}
                         </div>
                     </div>
                 </div>
@@ -92,6 +92,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
+    <!--新品、二手商品-->
     <div class="container" ng-if="showNormal==true">
         <div class="col-md-6 single-right-left animated wow slideInUp animated" data-wow-delay=".5s"
              style="visibility: visible; animation-delay: 0.5s; animation-name: slideInUp;">
@@ -159,7 +160,7 @@
                                                aria-controls="normalProfileTabPanel">商品评论({{pageInfo.total}})</a>
                     </li>
                 </ul>
-                <div id="tabContent" class="tab-content">
+                <div id="normalTabContent" class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active bootstrap-tab-text" id="normalDiscTabPanel"
                          aria-labelledby="normalDiscTabPanel-tab">
                         <div ng-bind-html="product.disc|to_trusted"></div>
@@ -213,7 +214,126 @@
         </div>
         <p class="copy-right">Copyright © 2018 All rights reserved.</p>
     </div>
-</div>
+
+    <!--拍卖商品-->
+    <div class="container" ng-if="showAuction==true">
+        <div class="col-md-6 single-right-left animated wow slideInUp animated" data-wow-delay=".5s"
+             style="visibility: visible; animation-delay: 0.5s; animation-name: slideInUp;">
+            <div class="grid images_3_of_2">
+                <div class="flexslider">
+                    <script>
+                        $(window).load(function () {
+                            $('.flexslider').flexslider({
+                                animation: "slide",
+                                controlNav: "thumbnails"
+                            });
+                        });
+                    </script>
+                    <ul class="slides">
+                        <li data-thumb="{{product.imga}}">
+                            <div class="thumb-image"><img ng-src="{{product.imga}}" data-imagezoom="true"
+                                                          class="img-responsive"></div>
+                        </li>
+                        <li data-thumb="{{product.imgb}}">
+                            <div class="thumb-image"><img ng-src="{{product.imgb}}" data-imagezoom="true"
+                                                          class="img-responsive"></div>
+                        </li>
+                        <li data-thumb="{{product.imgc}}">
+                            <div class="thumb-image"><img ng-src="{{product.imgc}}" data-imagezoom="true"
+                                                          class="img-responsive"></div>
+                        </li>
+                        <li data-thumb="{{product.imgd}}">
+                            <div class="thumb-image"><img ng-src="{{product.imgd}}" data-imagezoom="true"
+                                                          class="img-responsive"></div>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 single-right-left simpleCart_shelfItem animated wow slideInRight animated"
+             data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">
+            <h3>商品名称：{{product.name}}</h3>
+            <h4 style="margin-top:20px;">商品起拍价格：￥{{product.price}}</h4>
+            <h4 style="margin-top:20px;">商品类别：{{product.category.name}}</h4>
+            <h4 style="margin-top:20px;">数量：{{product.number}}</h4>
+            <h4 style="margin-top:20px;">商品类型：{{product.type==1?"新品":product.type==2?"二手":"拍卖品"}}</h4>
+            <h4 style="margin-top:20px;">发布时间：{{product.releaseTime}}</h4>
+            <h4 style="margin-top:20px;">发布人：<a
+                    ng-click="showUserInfo(product.publisher.id)">{{product.publisher.name}}</a></h4>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="bootstrap-tab animated wow slideInUp animated" data-wow-delay=".5s"
+             style="visibility: visible; animation-delay: 0.5s; animation-name: slideInUp;">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="auctionTabs" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#auctionDiscTabPanel" id="auctionDiscTab"
+                                                              role="tab"
+                                                              data-toggle="tab"
+                                                              aria-controls="auctionDiscTabPanel"
+                                                              aria-expanded="true">商品描述</a>
+                    </li>
+                    <li role="presentation"><a href="#auctionProfileTabPanel" role="tab" id="auctionProfileTab"
+                                               data-toggle="tab"
+                                               aria-controls="auctionProfileTabPanel">竞拍记录({{pageInfo.total}})</a>
+                    </li>
+                </ul>
+                <div id="auctionTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active bootstrap-tab-text" id="auctionDiscTabPanel"
+                         aria-labelledby="normalDiscTabPanel-tab">
+                        <div ng-bind-html="product.disc|to_trusted"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade bootstrap-tab-text" id="auctionProfileTabPanel"
+                         aria-labelledby="normalProfileTabPanel-tab">
+                        <div class="bootstrap-tab-text-grids">
+                            <div class="bootstrap-tab-text-grid" ng-repeat="auction in auctions">
+                                <div class="bootstrap-tab-text-grid-left">
+                                    <img ng-src="{{auction.user.headImg}}" alt="用户头像" class="img-responsive">
+                                </div>
+                                <div class="bootstrap-tab-text-grid-right">
+                                    <ul>
+                                        <li><a ng-click="showUserInfo(auction.user.id)">{{auction.user.name}}</a>
+                                        </li>
+                                        <li ng-if="isOwner==true"><a ng-click="deal(auction)">成交</a></li>
+                                    </ul>
+                                    <div>参与竞拍价格：￥{{auction.price}}</div>
+                                    <div>竞拍时间：{{auction.time}}</div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row" style="margin-top: 20px">
+                                <div class="col-md-12 text-center">
+                                    <ul class="pagination" style="margin-top:0px">
+                                        <li>
+                                            <a aria-label="Previous" ng-click="previous()">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li class="active"><a>{{pageInfo.pageNum}}</a></li>
+                                        <li>
+                                            <a aria-label="Next" ng-click="next()">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="add-review">
+                                <h4>发起竞拍</h4>
+                                <div class="container text-center">
+                                    竞拍金额:<input type="number" id="auctionPrice">
+                                    <input type="submit" value="确认" ng-click="auction()"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="copy-right">Copyright © 2018 All rights reserved.</p>
+    </div>
 </div>
 </body>
 </html>

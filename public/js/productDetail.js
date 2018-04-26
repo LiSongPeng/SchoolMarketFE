@@ -2,7 +2,7 @@
 var currUser = {
     headImg: "/upload/head.png",
     name: "hello",
-    id: "c07455bc-d21a-490f-88f3-0401d1899998",
+    id: "234234324234",
 };
 if (!currUser) {
     window.location.href = "login.html";
@@ -36,6 +36,24 @@ productDetail.controller("productDetailController", ["$scope", "$http", "$sce", 
     if (!productId) {
         jumpToIndex("商品详细获取失败，跳转到首页！");
     }
+
+    $scope.showUserInfo = function (userId) {
+        var url = BASE_URL + "/user/getById.do";
+        $http({
+            method: "GET",
+            url: url + "?id=" + userId,
+        }).then(function successCallback(response) {
+            response = response.data;
+            if (response.flag == FLAG_SUCCESS) {
+                var user = response.data;
+                user.headImg = BASE_URL + user.headImg;
+                $scope.user = user;
+                $('#myModal').modal('show');
+            }
+        }, function errorCallback(response) {
+            toastr.error("获取用户信息失败!");
+        });
+    };
 
     function initNormal(product) {
         $scope.showNormal = true;
@@ -81,23 +99,6 @@ productDetail.controller("productDetailController", ["$scope", "$http", "$sce", 
                 toastr.error("已经是第一页!");
             }
         };
-        $scope.showUserInfo = function (userId) {
-            var url = BASE_URL + "/user/getById.do";
-            $http({
-                method: "GET",
-                url: url + "?id=" + userId,
-            }).then(function successCallback(response) {
-                response = response.data;
-                if (response.flag == FLAG_SUCCESS) {
-                    var user = response.data;
-                    user.headImg = BASE_URL + user.headImg;
-                    $scope.user = user;
-                    $('#myModal').modal('show');
-                }
-            }, function errorCallback(response) {
-                toastr.error("获取用户信息失败!");
-            });
-        };
         $scope.addToCart = function () {
             $http({
                 method: "GET",
@@ -136,8 +137,96 @@ productDetail.controller("productDetailController", ["$scope", "$http", "$sce", 
         };
     }
 
-    function initAuction() {
+    function initAuction(product) {
         $scope.showAuction = true;
+        product.imga = BASE_URL + product.imga;
+        product.imgb = BASE_URL + product.imgb;
+        product.imgc = BASE_URL + product.imgc;
+        product.imgd = BASE_URL + product.imgd;
+        var date = new Date(product.releaseTime);
+        product.releaseTime = date.toLocaleDateString() + date.toLocaleTimeString();
+        $scope.product = product;
+        if ($scope.product.publisher.id == currUser.id) {
+            $scope.isOwner = true;
+        } else {
+            $scope.isOwner = false;
+        }
+        var queryAuctionRecord = function (pageSize, pageNumber) {
+            var url = BASE_URL + "/auction/queryAuctionRecord.do";
+            $http({
+                method: "GET",
+                url: url + "?pageSize=" + pageSize + "&pageNumber=" + pageNumber + "&productId=" + $scope.product.id,
+            }).then(function successCallback(response) {
+                response = response.data;
+                if (response.flag == FLAG_SUCCESS) {
+                    $scope.pageInfo = response.data;
+                    for (var i = 0; i < response.data.list.length; i++) {
+                        response.data.list[i].user.headImg = BASE_URL + response.data.list[i].user.headImg;
+                        var date = new Date(response.data.list[i].time);
+                        response.data.list[i].time = date.toLocaleDateString() + date.toLocaleTimeString();
+                    }
+                    $scope.auctions = response.data.list;
+                }
+            }, function errorCallback(response) {
+                toastr.error("竞拍记录获取失败!");
+            });
+        };
+        queryAuctionRecord(6, 1);
+        $scope.next = function () {
+            if ($scope.pageInfo.hasNextPage) {
+                queryAuctionRecord(6, $scope.pageInfo.pageNum + 1);
+            } else {
+                toastr.error("已经是最后一页!");
+            }
+        };
+        $scope.previous = function () {
+            if ($scope.pageInfo.hasPreviousPage) {
+                queryAuctionRecord(6, $scope.pageInfo.pageNum - 1);
+            } else {
+                toastr.error("已经是第一页!");
+            }
+        };
+        $scope.deal = function (auctionRecord) {
+            var url = BASE_URL + "/order/auctionDeal.do";
+            $http({
+                method: "GET",
+                url: url + "?userId=" + auctionRecord.user.id + "&auctionPrice=" + auctionRecord.price + "&productId=" + $scope.product.id,
+            }).then(function successCallback(response) {
+                response = response.data;
+                if (response.flag == FLAG_SUCCESS) {
+                    toastr.success("交易成功！");
+                } else {
+                    toastr.error("交易失败!");
+                }
+            }, function errorCallback(response) {
+                toastr.error("交易失败!");
+            });
+        };
+        $scope.auction = function () {
+            if (currUser.id == $scope.product.publisher.id) {
+                toastr.error("您不能竞拍自己的商品！");
+                return;
+            }
+            var auctionPrice = $("#auctionPrice").val();
+            if (auctionPrice < $scope.product.price) {
+                toastr.error("竞拍价不能低于起拍价！");
+                return;
+            }
+            var url = BASE_URL + "/auction/addAuctionRecord.do";
+            $http({
+                method: "GET",
+                url: url + "?userId=" + currUser.id + "&price=" + auctionPrice + "&productId=" + $scope.product.id,
+            }).then(function successCallback(response) {
+                response = response.data;
+                if (response.flag == FLAG_SUCCESS) {
+                    toastr.success("竞拍成功！");
+                } else {
+                    toastr.error("竞拍失败!");
+                }
+            }, function errorCallback(response) {
+                toastr.error("竞拍失败!");
+            });
+        };
     }
 
     $http({

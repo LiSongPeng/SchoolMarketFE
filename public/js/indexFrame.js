@@ -1,13 +1,3 @@
-// var currUser = window.sessionStorage.getItem(CURRENT_USER);
-var currUser = {
-    headImg: "/upload/head.png",
-    name: "hello",
-    id: "22222222222",
-};
-if (!currUser) {
-    window.location.href = "login.html";
-}
-
 var indexFrame = angular.module("indexFrame", []);
 toastr.options = {
     closeButton: false,

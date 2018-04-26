@@ -1,16 +1,10 @@
-// var currUser = window.sessionStorage.getItem(CURRENT_USER);
-var currUser = {
-    headImg: "/upload/head.png",
-    name: "hello",
-    id: "234234324234",
-};
+var currUser = JSON.parse(window.sessionStorage.getItem(CURRENT_USER));
 if (!currUser) {
     window.location.href = "login.html";
 }
 var index = angular.module("index", []);
 index.controller("topBarController", ["$rootScope", "$scope", "$http", function ($rootScope, $scope, $http) {
     $rootScope.notifyNumber = 0;
-    // $rootScope.currUser = JSON.parse(currUser);
     $rootScope.currUser = currUser;
     $rootScope.headImg = BASE_URL + $rootScope.currUser.headImg;
     $scope.searchProduct = function () {

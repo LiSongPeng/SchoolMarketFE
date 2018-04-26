@@ -1,13 +1,7 @@
-// var currUser = window.sessionStorage.getItem(CURRENT_USER);
-var currUser = {
-    headImg: "/upload/head.png",
-    name: "hello",
-    id: "22222222222",
-};
+var currUser = JSON.parse(window.sessionStorage.getItem(CURRENT_USER));
 if (!currUser) {
     window.location.href = "login.html";
 }
-
 var search = angular.module("search", []);
 toastr.options = {
     closeButton: false,
