@@ -12,7 +12,6 @@ if (!currUser) {
 }
 var publishProduct = angular.module("publishProduct", []);
 publishProduct.controller("publishProductController", ["$scope", "$http", "$sce", function ($scope, $http, $sce) {
-    $('.textarea').wysihtml5();
     $scope.action = $sce.trustAsResourceUrl(BASE_URL + "/product/addProduct.do");
     $http({
         method: "GET",
