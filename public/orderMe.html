@@ -113,6 +113,7 @@
                                 <option value="1">未派送</option>
                                 <option value="2">派送中</option>
                                 <option value="3">已完成</option>
+                                <option value="4">未付款</option>
                             </select>
                         </p>
                         <table class="table table-hover">
@@ -146,6 +147,7 @@
                                     <span ng-if="order.status==1">未派送</span>
                                     <span ng-if="order.status==2">派送中</span>
                                     <span ng-if="order.status==3">已完成</span>
+                                    <span ng-if="order.status==4">未付款</span>
                                 </td>
                                 <td>{{order.user.name}}</td>
                                 <td>{{order.user.phone}}</td>

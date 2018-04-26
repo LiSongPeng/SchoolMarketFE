@@ -2,7 +2,7 @@
 var currUser = {
     headImg: "/upload/head.png",
     name: "hello",
-    id: "22222222222",
+    id: "c07455bc-d21a-490f-88f3-0401d1899998",
 };
 if (!currUser) {
     window.location.href = "login.html";
@@ -61,6 +61,43 @@ order.controller("orderController", ["$scope", "$http", function ($scope, $http)
             }
         }, function errorCallback(response) {
             swal("确认收货失败,请稍后重试!");
+        });
+    };
+    var currOrderId;
+    $scope.balance = function (order) {
+        currOrderId = order.id;
+        $http({
+            method: "GET",
+            url: BASE_URL + "/product/getById.do?id=" + order.product.id,
+        }).then(function successCallback(response) {
+            response = response.data;
+            if (response.flag == FLAG_SUCCESS) {
+                var product = response.data;
+                var publisher = product.publisher;
+                publisher.headImg = BASE_URL + publisher.headImg;
+                publisher.alipay = BASE_URL + publisher.alipay;
+                $scope.seller = publisher;
+                $scope.totalPrice = order.totalPrice;
+            } else {
+                swal("卖家信息获取失败,请稍后重试!");
+            }
+        }, function errorCallback(response) {
+            swal("卖家信息获取失败,请稍后重试!");
+        });
+    };
+    $scope.confirmPay = function () {
+        $http({
+            method: "GET",
+            url: BASE_URL + "/order/confirmPay.do?orderId=" + currOrderId,
+        }).then(function successCallback(response) {
+            response = response.data;
+            if (response.flag == FLAG_SUCCESS) {
+                swal("结算成功！");
+            } else {
+                swal("结算失败,请稍后重试!");
+            }
+        }, function errorCallback(response) {
+            swal("结算失败,请稍后重试!");
         });
     };
     var queryOrder = function (userId, pageSize, pageNumber, status) {
