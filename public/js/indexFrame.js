@@ -1,3 +1,4 @@
+var currUser = JSON.parse(window.sessionStorage.getItem(CURRENT_USER));
 var indexFrame = angular.module("indexFrame", []);
 toastr.options = {
     closeButton: false,
@@ -12,24 +13,6 @@ toastr.options = {
     showMethod: "fadeIn",
     hideMethod: "fadeOut"
 };
-indexFrame.controller("bannerController", ["$scope", "$http", function ($scope, $http) {
-    $http({
-        method: "GET",
-        url: BASE_URL + "/product/getAllProduct.do?pageSize=5&pageNumber=1",
-    }).then(function successCallback(response) {
-        response = response.data;
-        if (response.flag == FLAG_SUCCESS) {
-            for (var i = 0; i < response.data.list.length; i++) {
-                response.data.list[i].imga = BASE_URL + response.data.list[i].imga;
-            }
-            $scope.recommends = response.data.list;
-            console.log($scope.recommends);
-        }
-    }, function errorCallback(response) {
-        toastr.error("商品获取失败!");
-    });
-}]);
-
 indexFrame.controller("productController", ["$scope", "$http", function ($scope, $http) {
     $http({
         method: "GET",

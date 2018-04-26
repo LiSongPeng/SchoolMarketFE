@@ -177,7 +177,7 @@ shoppingCart.controller("shoppingCartController", ["$scope", "$http", function (
                 }
                 swal("结算成功！");
             } else {
-                swal("结算失败,请稍后重试!");
+                swal("结算失败,库存不足或者系统出错!");
             }
         }, function errorCallback(response) {
             swal("结算失败,请稍后重试!");

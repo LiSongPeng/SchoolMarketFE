@@ -2,7 +2,6 @@ var currUser = JSON.parse(window.sessionStorage.getItem(CURRENT_USER));
 if (!currUser) {
     window.location.href = "login.html";
 }
-var search = angular.module("search", []);
 toastr.options = {
     closeButton: false,
     debug: false,
@@ -16,8 +15,8 @@ toastr.options = {
     showMethod: "fadeIn",
     hideMethod: "fadeOut"
 };
+var search = angular.module("search", []);
 search.controller("searchController", ["$scope", "$http", function ($scope, $http) {
-    // alert(sessionStorage.getItem(KEY_WORD));
     $scope.showProduct = false;
     jQuery('#searchbox').typeahead({
         source: function (keyWord, process) {

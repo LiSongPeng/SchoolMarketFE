@@ -33,7 +33,7 @@ login.controller("loginController", ["$scope", "$http", function ($scope, $http)
             response = response.data;
             if (response.flag == FLAG_SUCCESS) {
                 var currentUser = response.data;
-                sessionStorage.setItem(CURRENT_USER, currentUser);
+                sessionStorage.setItem(CURRENT_USER, JSON.stringify(currentUser));
                 if ($scope.isRemember) {
                     Cookie.set(COOKIE_USERNAME, $scope.phoneOrEmail + ":" + $scope.password);
                 } else {
